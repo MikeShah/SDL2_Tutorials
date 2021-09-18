@@ -1,5 +1,7 @@
 // On linux compile with:
 // g++ -std=c++17 main.cpp glad/src/glad.c -I./glad/include -o prog -lSDL2 -ldl
+// On windows compile with (if using mingw)
+// g++ main.cpp ./glad/src/glad.c -I./glad/include -o prog.exe -lmingw32 -lSDL2main -lSDL2
 
 // C++ Standard Libraries
 #include <iostream>
@@ -37,8 +39,8 @@ int main(int argc, char* argv[]){
     // The parameters are for the title, x and y position,
     // and the width and height of the window.
     window = SDL_CreateWindow("C++ SDL2 Window",
-            0,
-            2500,
+            20,
+            20,
             640,
             480,
             SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
