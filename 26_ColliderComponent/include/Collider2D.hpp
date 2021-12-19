@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include "TexturedRectangle.hpp"
+#include "Vector2D.hpp"
 
 class Collider2D{
     public:
@@ -20,7 +21,7 @@ class Collider2D{
         void SetAbsolutePosition(int x, int y);
         void SetDimensions(int w, int h);
 
-        void SetBoundingBoxAutomatically(SDL_Renderer* renderer,TexturedRectangle& rect); 
+        Vector2D SetBoundingBoxAutomatically(SDL_Surface* surface,int r, int g, int b); 
 
         void Update();
         void Render();
