@@ -21,7 +21,7 @@ class Collider2D{
         void SetAbsolutePosition(int x, int y);
         void SetDimensions(int w, int h);
 
-        Vector2D SetBoundingBoxAutomatically(SDL_Surface* surface,int r, int g, int b); 
+        Vector2D SetBoundingBoxAutomatically(SDL_Surface* surface,Uint8 r, Uint8 g, Uint8 b); 
 
         void Update();
         void Render();

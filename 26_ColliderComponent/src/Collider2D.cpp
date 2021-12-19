@@ -42,7 +42,7 @@ void Collider2D::SetDimensions(int w, int h){
 }
 
 #include <iostream>
-Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, int r, int g, int b){
+Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, Uint8 g, Uint8 b){
     
     SDL_LockSurface(surface);
     int w= surface->w;
@@ -52,38 +52,33 @@ Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, int r, in
     // Important to get the correct pixel type here
     Uint8* pixels = (Uint8*)surface->pixels; 
     
-//    std::cout << "w: " << w << std::endl;
-//    std::cout << "h: " << h << std::endl;
-//    std::cout << "pitch: " << pitch << std::endl;
-//    std::cout << "colorchannels: " << colorchannels << std::endl;
-//    std::cout << SDL_GetPixelFormatName(surface->format->format) << std::endl;
+    std::cout << "w: " << w << std::endl;
+    std::cout << "h: " << h << std::endl;
+    std::cout << "pitch: " << pitch << std::endl;
+    std::cout << "colorchannels: " << colorchannels << std::endl;
+    std::cout << SDL_GetPixelFormatName(surface->format->format) << std::endl;
 
     SDL_UnlockSurface(surface);
     
 
     // Set to values larger than an image size
-    int xmin=9999999; // Smallest value in x-axis not part of color key
-    int xmax=-9999; // Largest value in x-axis not part of color key
-    int ymin=9999999;
-    int ymax=-9999;
+    int xmin= w; // Smallest value in x-axis not part of color key
+    int xmax= 0; // Largest value in x-axis not part of color key
+    int ymin= h;
+    int ymax= 0;
 
-    // Here we're trying to find the 
-    // smallest and largest values that are not pink
-    // in each of the x and y axis.
     for(int y =0; y < h; y++){
-        for(int x=0; x < w; x+=colorchannels){ 
+        for(int x=0; x < w*colorchannels; x+=colorchannels){ 
 
-            if(pixels[y*w+x+0] == b &&
-               pixels[y*w+x+1] == g &&
-               pixels[y*w+x+2] == r){
-                // must be transparent
-              //  std::cout << "Found a transparent pixel" << std::endl;
-                
+            if(pixels[y*(w*colorchannels)+x+0] == b &&
+               pixels[y*(w*colorchannels)+x+1] == g &&
+               pixels[y*(w*colorchannels)+x+2] == r){
+                // pixel must be transparent
             }else{
                 // Update the smallest and largest
                 // values of non-transparent pixels
-                xmin = std::min(xmin,x);
-                xmax = std::max(xmax,x);
+                xmin = std::min(x,xmin);
+                xmax = std::max(x,xmax);
 
                 ymin = std::min(ymin,y);
                 ymax = std::max(ymax,y);
@@ -91,14 +86,16 @@ Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, int r, in
         }
     }
 
+
     // Update our bounding box
     // Note that the max will always be greater than
     // the minimum value
-    //
-    m_colliderRectangle->w = (xmax/3 - xmin/3);
-    m_colliderRectangle->h = (ymax - ymin);
-    //m_colliderRectangle->x = xmin;
-    //m_colliderRectangle->y = ymin;
+    // For width, we need to divide by the pitch of our object
+    int scale = (1200/300);
+    m_colliderRectangle->w = ((xmax/colorchannels - xmin/colorchannels)/(scale));
+    m_colliderRectangle->h = (ymax - ymin)/scale;
+//    m_colliderRectangle->x = m_colliderRectangle->x;
+//    m_colliderRectangle->y = m_colliderRectangle->y;
 
     std::cout << "m_col.w: " << m_colliderRectangle->w << std::endl;
     std::cout << "m_col.h: " << m_colliderRectangle->h << std::endl;
@@ -108,8 +105,8 @@ Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, int r, in
     std::cout << "ymax: " << ymax << std::endl;
 
     Vector2D result;
-    result.x = 35;
-    result.y = 45;
+    result.x = xmin/(colorchannels*scale);
+    result.y = ymin/scale;
     return result;
 }
 

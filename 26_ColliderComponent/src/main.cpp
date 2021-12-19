@@ -58,9 +58,6 @@ void HandleUpdate(){
     object1->Update();
     object2->Update();
 
-    // Set draw positions and size
-    object1->GetTexturedRectangle().SetPosition(app->GetMouseX(),app->GetMouseY());
-    object1->GetTexturedRectangle().SetDimensions(300,300);
 
     static int posX =0;
     static int posY =0;
@@ -100,6 +97,10 @@ void HandleUpdate(){
 
     // For each of the objects , update the colliders
     // Update each of object 1's colliders position and dimensions
+    // Set draw positions and size
+    object1->GetTexturedRectangle().SetPosition(app->GetMouseX(),app->GetMouseY());
+    object1->GetTexturedRectangle().SetDimensions(300,300);
+
     object1->GetCollider2D(0).SetAbsolutePosition(object1->GetTexturedRectangle().GetPositionX(), object1->GetTexturedRectangle().GetPositionY());
 
     object1->GetCollider2D(0).SetDimensions(object2->GetTexturedRectangle().GetWidth(), object1->GetTexturedRectangle().GetHeight()/2);
@@ -109,8 +110,8 @@ void HandleUpdate(){
 
     Vector2D dims = object1->GetCollider2D(0).SetBoundingBoxAutomatically(ResourceManager::GetInstance().GetSurface("./images/kong.bmp"),0xFF,0x00,0xFF);
 
-    int newXPos = dims.x + app->GetMouseX();
-    int newYPos = dims.y/2 + app->GetMouseY();
+    int newXPos = dims.x + app->GetMouseX(); 
+    int newYPos = dims.y + app->GetMouseY();
 
     object1->GetCollider2D(0).SetAbsolutePosition(newXPos,newYPos);
 
