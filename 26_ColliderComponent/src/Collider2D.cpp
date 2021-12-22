@@ -41,7 +41,6 @@ void BoxCollider2D::SetDimensions(int w, int h){
     m_colliderRectangle->h = h; 
 }
 
-#include <iostream>
 Vector2D BoxCollider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, Uint8 g, Uint8 b){
     
     SDL_LockSurface(surface);
