@@ -1,6 +1,6 @@
 #include "Collider2D.hpp"
 
-Collider2D::Collider2D()
+BoxCollider2D::BoxCollider2D()
 {
     m_colliderRectangle = new SDL_Rect;
     m_colliderRectangle->x = 0;
@@ -10,16 +10,16 @@ Collider2D::Collider2D()
 }
 
 
-Collider2D::~Collider2D(){
+BoxCollider2D::~BoxCollider2D(){
 
 }
 
-SDL_Rect& Collider2D::GetColliderBoundingBox() {
+SDL_Rect& BoxCollider2D::GetColliderBoundingBox() {
     return *m_colliderRectangle;
 }
 
 // Detect collision
-SDL_bool Collider2D::IsColliding(Collider2D& collider)
+SDL_bool BoxCollider2D::IsColliding(BoxCollider2D& collider)
 {
 
     if(m_colliderRectangle==nullptr){
@@ -32,17 +32,17 @@ SDL_bool Collider2D::IsColliding(Collider2D& collider)
     return SDL_HasIntersection(m_colliderRectangle,temp);
 }
 
-void Collider2D::SetAbsolutePosition(int x, int y){
+void BoxCollider2D::SetAbsolutePosition(int x, int y){
     m_colliderRectangle->x = x;
     m_colliderRectangle->y = y;
 }
-void Collider2D::SetDimensions(int w, int h){
+void BoxCollider2D::SetDimensions(int w, int h){
     m_colliderRectangle->w = w;
     m_colliderRectangle->h = h; 
 }
 
 #include <iostream>
-Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, Uint8 g, Uint8 b){
+Vector2D BoxCollider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, Uint8 g, Uint8 b){
     
     SDL_LockSurface(surface);
     int w= surface->w;
@@ -52,11 +52,11 @@ Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, 
     // Important to get the correct pixel type here
     Uint8* pixels = (Uint8*)surface->pixels; 
     
-    std::cout << "w: " << w << std::endl;
-    std::cout << "h: " << h << std::endl;
-    std::cout << "pitch: " << pitch << std::endl;
-    std::cout << "colorchannels: " << colorchannels << std::endl;
-    std::cout << SDL_GetPixelFormatName(surface->format->format) << std::endl;
+//    std::cout << "w: " << w << std::endl;
+//    std::cout << "h: " << h << std::endl;
+//    std::cout << "pitch: " << pitch << std::endl;
+//    std::cout << "colorchannels: " << colorchannels << std::endl;
+//    std::cout << SDL_GetPixelFormatName(surface->format->format) << std::endl;
 
     SDL_UnlockSurface(surface);
     
@@ -97,12 +97,12 @@ Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, 
 //    m_colliderRectangle->x = m_colliderRectangle->x;
 //    m_colliderRectangle->y = m_colliderRectangle->y;
 
-    std::cout << "m_col.w: " << m_colliderRectangle->w << std::endl;
-    std::cout << "m_col.h: " << m_colliderRectangle->h << std::endl;
-    std::cout << "xmin: " << xmin << std::endl;
-    std::cout << "xmax: " << xmax << std::endl;
-    std::cout << "ymin: " << ymin << std::endl;
-    std::cout << "ymax: " << ymax << std::endl;
+//    std::cout << "m_col.w: " << m_colliderRectangle->w << std::endl;
+//    std::cout << "m_col.h: " << m_colliderRectangle->h << std::endl;
+//    std::cout << "xmin: " << xmin << std::endl;
+//    std::cout << "xmax: " << xmax << std::endl;
+//    std::cout << "ymin: " << ymin << std::endl;
+//    std::cout << "ymax: " << ymax << std::endl;
 
     Vector2D result;
     result.x = xmin/(colorchannels*scale);
@@ -110,9 +110,9 @@ Vector2D Collider2D::SetBoundingBoxAutomatically(SDL_Surface* surface, Uint8 r, 
     return result;
 }
 
-void Collider2D::Update(){
-    // not really needed...
+void BoxCollider2D::Update(){
 }
-void Collider2D::Render(){
+
+void BoxCollider2D::Render(){
 
 }

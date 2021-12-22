@@ -56,8 +56,8 @@ void GameEntity::AddTexturedRectangleComponent(std::string spritepath, int redco
     m_sprite = new TexturedRectangle(m_renderer,spritepath, redcolorkey, greencolorkey, bluecolorkey);
 }
 
-void GameEntity::AddCollider2D(){
-    m_colliders.push_back(new Collider2D());
+void GameEntity::AddBoxCollider2D(){
+    m_colliders.push_back(new BoxCollider2D());
 }
 
 
@@ -65,8 +65,30 @@ TexturedRectangle& GameEntity::GetTexturedRectangle(){
     return *m_sprite;
 }
 
-Collider2D& GameEntity::GetCollider2D(size_t index){
+BoxCollider2D& GameEntity::GetBoxCollider2D(size_t index){
     return *m_colliders[index];
 }
 
+void GameEntity::SetPosition(int x, int y){
+    // Set the texture position
+    if(nullptr!=m_sprite){
+        m_sprite->SetPosition(x,y);
+    }
+    for(int i=0; i < m_colliders.size();i++){
+        if(nullptr != m_colliders[i]){
+            m_colliders[i]->SetAbsolutePosition(x,y);
+        }
+    }
+}
 
+void GameEntity::SetDimensions(int w, int h){
+    // Set the texture position
+    if(nullptr!=m_sprite){
+        m_sprite->SetDimensions(w,h);
+    }
+    for(int i=0; i < m_colliders.size();i++){
+        if(nullptr != m_colliders[i]){
+            m_colliders[i]->SetDimensions(w,h);
+        }
+    }
+}
