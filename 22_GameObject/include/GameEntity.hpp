@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_HPP
-#define GAMEOBJECT_HPP
+#ifndef GAMEENTITY_HPP
+#define GAMEENTITY_HPP
 #include <string>
 // Third Party
 #include <SDL2/SDL.h> // For Mac, use <SDL.h>
