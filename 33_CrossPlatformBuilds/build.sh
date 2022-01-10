@@ -18,7 +18,6 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo ""
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Compilng on Mac"
-    ARGS="-g -std=c++17"
     INCLUDE="./include `sdl2-config --clfags`"
     LIBS="`sdl2-config --libs` -lSDL2_ttf -lSDL2_mixer"
     echo ""
