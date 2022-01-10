@@ -15,6 +15,7 @@
 #include "Vector2D.hpp"
 #include "Sound.hpp"
 #include "DynamicText.hpp"
+#include "Music.hpp"
 
 // One possibility of creating as a global our app
 SDLApp* app;
@@ -28,6 +29,8 @@ GameEntity* ball;
 
 Sound* CollisionSound;
 Sound* ScoreSound;
+
+Music* MainMusicTrack;
 
 struct GameState{
     float movementSpeed;
@@ -241,11 +244,20 @@ void HandleRendering(){
     rightScore.DrawText(app->GetRenderer(),rScore,500,0,100,50);
 }
 
+
+Uint32 my_callbackfunc(Uint32 interval, void *param){
+    std::cout << "Fun score updated from: " << (const char*)param << ":" << gameState->leftScore << " " << gameState->rightScore << std::endl; 
+
+    return 0;
+}
+
+
+
 // Entry point of the program
 int main(int argc, char* argv[]){
     // Setup the SDLApp
     const char* title = "SDL2 Series - Pong";
-    app = new SDLApp(SDL_INIT_VIDEO | SDL_INIT_AUDIO ,title, 20,20,640,480);
+    app = new SDLApp(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER ,title, 20,20,640,480);
     app->SetMaxFrameRate(16);
 
     // Create any objects in our scene
@@ -281,6 +293,9 @@ int main(int argc, char* argv[]){
     // Setupt the score sound
     ScoreSound= new Sound("./assets/sounds/Score.wav");
     ScoreSound->SetupDevice();
+    // Setup the music for our game
+    MainMusicTrack = new Music("./assets/music/guitarchords.mp3");
+    MainMusicTrack->PlayMusic(-1);
 
     // Setup the Game State
     gameState = new GameState;
@@ -295,6 +310,8 @@ int main(int argc, char* argv[]){
     app->SetEventCallback(HandleEvents);
     app->SetUpdateCallback(HandleUpdate);
     app->SetRenderCallback(HandleRendering);
+    // Add some timers (for demonstration purpose)
+    app->AddTimer(2000,my_callbackfunc,(char*)"timer called");
     // Run our application until terminated
     app->RunLoop();
 
