@@ -115,15 +115,39 @@ void SDLApp::StopAppLoop(){
 }
 
 // Adding a timer
-void SDLApp::AddTimer(Uint32 interval, 
-              SDL_TimerCallback callback,
-              void* param){
+SDL_TimerID SDLApp::AddTimer(Uint32 delay, SDL_TimerCallback callback, void* param){
     
+    SDL_TimerID id = SDL_AddTimer(delay, callback, param);
+    m_timers.insert(id);
+
+    return id;
+}
+
+SDL_TimerID SDLApp::AddRecurringTimer(Uint32 interval, SDL_TimerCallback callback, void* param){
+
     SDL_TimerID id = SDL_AddTimer(interval, callback, param);
     m_timers.insert(id);
 
+    SDL_Event event;
+    SDL_UserEvent userevent;
+
+    /* In this example, our callback pushes an SDL_USEREVENT event
+    into the queue, and causes our callback to be called again at the
+    same interval: */
+
+    userevent.type = SDL_USEREVENT;
+    userevent.code = 0;
+    userevent.data1 = NULL;
+    userevent.data2 = NULL;
+
+    event.type = SDL_USEREVENT;
+    event.user = userevent;
+
+    SDL_PushEvent(&event);
+    return(interval);
 }
 
+// Remove a timer
 void SDLApp::RemoveTimer(SDL_TimerID id){
     // TODO: Check that the timer_id actually exists.
     if(SDL_RemoveTimer(id)==SDL_FALSE){

@@ -8,7 +8,11 @@
 
 #include <SDL2/SDL.h>
 // The SDL2_ttf font library for drawing text
-#include <SDL2/SDL_ttf.h>
+#ifdef MAC
+    #include <SDL2_ttf/SDL_ttf.h>
+#else
+    #include <SDL2/SDL_ttf.h>
+#endif
 
 #include <string>
 

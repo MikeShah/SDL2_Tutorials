@@ -38,11 +38,12 @@ class SDLApp{
         // Stop the main loop of our application
         void StopAppLoop();
 
-        // Adding a timer
-        void AddTimer(Uint32 interval, 
-                      SDL_TimerCallback callback,
-                      void* param);
-
+        // Adding a timer that will run one time after a delay
+        SDL_TimerID AddTimer(Uint32 delay, SDL_TimerCallback callback, void* param);
+        // Add a timer that will run after an initial delay (the interval), and
+        // continue to call the callback function at the set interval.
+        SDL_TimerID AddRecurringTimer(Uint32 interval, SDL_TimerCallback callback, void* param);
+        // Remove a timer
         void RemoveTimer(SDL_TimerID id);
 
     private:
