@@ -18,8 +18,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo ""
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Compilng on Mac"
-    INCLUDE="./include -I/Library/Frameworks/SDL2.framework/Headers"
-    LIBS="-F/Library/Frameworks -framework SDL2"
+    ARGS="-g -std=c++17"
+    INCLUDE="./include `sdl2-config --clfags`"
+    LIBS="`sdl2-config --libs` -lSDL2_ttf -lSDL2_mixer"
     echo ""
 elif [[ "$OSTYPE" == "mysys" ]] ; then
     echo "Compiling on Windows(mysys)"

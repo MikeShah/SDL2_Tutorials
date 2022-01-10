@@ -1,11 +1,7 @@
 #ifndef MUSIC_HPP
 #define MUSIC_HPP
 
-#ifdef MAC
-    #include <SDL2_mixer/SDL_mixer.h>
-#else
-    #include <SDL2/SDL_mixer.h>
-#endif
+#include <SDL2/SDL_mixer.h>
 
 #include <string>
 
