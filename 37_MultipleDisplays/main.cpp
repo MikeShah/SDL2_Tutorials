@@ -37,6 +37,7 @@ int main(int argc, char* argv[]){
     // Handling multiple displays!
     int totalDisplays = SDL_GetNumVideoDisplays();
     SDL_Rect displayDimensions[totalDisplays];
+
     // Populate our display dimensions
     for(int i=0; i< totalDisplays; i++){
         SDL_GetDisplayBounds(i,&displayDimensions[i]);
