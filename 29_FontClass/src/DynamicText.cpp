@@ -53,5 +53,8 @@ void DynamicText::DrawText(SDL_Renderer* renderer, std::string text,int x, int y
     m_rectangle.h = h;
     // Render our text on a rectangle
     SDL_RenderCopy(renderer,m_texture,NULL,&m_rectangle);
+    if(m_texture != nullptr){
+        SDL_DestroyTexture(m_texture);
+    }
 
 }
