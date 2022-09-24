@@ -78,6 +78,7 @@ class EntityManager{
         // Delete all of the entities
         void DeleteAllEntities(){
             m_entities.erase(m_entities.begin(),m_entities.end());
+            m_entityCount=0;
         }
 
     private:
