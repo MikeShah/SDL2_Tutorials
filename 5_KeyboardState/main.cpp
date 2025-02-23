@@ -77,18 +77,7 @@ int main(int argc, char* argv[]){
     // We add a delay in order to see that our window
     // has successfully popped up.
     SDL_Delay(3000);
-    // We add a delay in order to see that our window
-    // has successfully popped up.
-    SDL_Delay(3000);
-    // We add a delay in order to see that our window
-    // has successfully popped up.
-    SDL_Delay(3000);
-    // We add a delay in order to see that our window
-    // has successfully popped up.
-    SDL_Delay(3000);
-    // We add a delay in order to see that our window
-    // has successfully popped up.
-    SDL_Delay(3000);
+    
     // our program.
     SDL_Quit();
     return 0;
